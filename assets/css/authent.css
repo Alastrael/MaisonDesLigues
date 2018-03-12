@@ -1,0 +1,37 @@
+
+/*document css de la page d'authentification*/
+
+body {
+    background-color:  rgb(221, 219, 219)  !important ;
+}
+
+label {
+    background : white;
+}
+
+#logo {
+    margin : 1% 1%;/*
+    padding-top: 0.5%;*/
+}
+
+#identif {
+    margin-top: 7%;
+}
+
+#LogInTexte {
+    text-align: center;
+}
+
+.connexion {
+    background-color: rgb(70, 71, 71) !important;
+    border : 3px solid;
+}
+
+#mdp {
+    margin-top: 10%;
+}
+
+.pad {
+    margin-left: 35%;
+}
+

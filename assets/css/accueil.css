@@ -1,0 +1,123 @@
+/*document css de l'index de l'accueil avec l'affichage des différentes formations */
+
+/*Le fond de la page*/
+body {
+    background-color: rgb(172, 172, 172) !important;
+}
+
+#header {
+    background-color: rgb(92, 90, 90) !important;
+    position: relative;
+}
+
+h1 {
+    margin-top: 10%;
+}
+
+.centrer{
+    position:absolute;
+    left: 12%;
+    top: 54%;
+    width: 800px;
+    height: 200px;
+    margin-left: -400px; /* Cette valeur doit être la moitié négative de la valeur du width */
+    margin-top: -100px; /* Cette valeur doit être la moitié négative de la valeur du height */
+
+}
+
+.couleurSinscrire {
+    background-color: rgb(42, 44, 43);
+}
+
+.espace {
+    padding: 5px;
+}
+
+#container {
+    font-family: 20px Montserrat, sans-serif;
+    font-size: 19px;
+}
+
+/*La "bannière" de l'accueil*/
+#banner{
+    display: flex;
+}
+
+#session {
+    color: white;
+    margin: 21px;
+}
+
+#logo {
+    margin : 0.7% 0.7%;
+    border : 2px solid;
+    background-color: rgb(55, 178, 235);
+}
+
+.button {
+    border: 1.4px solid rgb(138, 138, 138);
+    background-color: rgb(26, 27, 27);
+    color : rgb(146, 146, 146);
+}
+
+.arrondis {
+    border: 2px solid;
+    border-radius: 25px;
+}
+
+.centrer {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logout {
+    margin : 21px 10px;
+    height: 5%;
+}
+
+.list-group {
+    width: 100%;
+}
+
+/*L'espace du titre*/
+#titre {
+    background-color: rgb(55, 178, 235);
+    border-radius: 10px;
+    width: 60%;
+    padding: 50px; 
+    height: 150px;
+	/*background-color:rgb(40, 93, 136);*/
+	text-align: center;
+	color:rgb(8, 10, 19);
+    margin: auto auto;	
+    border: solid;
+}
+
+#tableauFormation {
+    width: 85%; /* il est préférable de calculer cette valeur en % pour qu'il s'adapte*/
+	height:800px;
+	margin:20px auto;
+	border: solid #fff 1px;
+	/*background-color:rgb(184, 182, 175);*/
+}
+
+.ligne {
+    display: flex;
+}
+
+#cacher{
+    visibility: hidden;
+}
+
+#formations {
+    margin : 20px 20px;
+    display: flex;
+}
+
+#print {
+    width: 10%;
+}
+
+#decalage {
+    margin : 0px 65px;
+}
