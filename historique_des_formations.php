@@ -36,9 +36,5 @@
             include_once("vues/landing_historique.php");
         ?>
     </div>
-    <?php    
-        include_once("vues/footer.php"); 
-    ?> 
-
 </body>
 </html>

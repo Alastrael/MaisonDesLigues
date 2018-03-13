@@ -13,10 +13,7 @@
 <body>
 
     <?php
-        $index = "../index.php";
-        if($_POST["submit"] == "Annuler la participation")annulerParticipation($_POST['identifiantParticipation']);
-        else if($_POST["submit"]=="Classer cette formation")ancienneFormation($_POST['identifiantParticipation']);
-        else rediriger($index);
+        annulerParticipation($_POST['identifiantParticipation']);
     ?>
 
 </body>

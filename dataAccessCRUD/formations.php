@@ -5,7 +5,7 @@
      *
      * @return PDO
      */
-    function connexion(){
+        function connexion(){
 
         $host = "localhost";
         $dbname = "bdd-m2l";
@@ -46,7 +46,8 @@
 
         $pdo = connexion();
 
-        $requete = "select * from salarie natural join participer natural join formation where (statut=1 or statut=2) and salarie.nom_Salarie = :nom";
+        $requete = "select * from salarie natural join participer natural join 
+        formation where (statut=1 or statut=2) and salarie.nom_Salarie = :nom";
 
         $prepReq = $pdo->prepare($requete);
         $prepReq->BindValue(':nom',$nom);
@@ -65,12 +66,11 @@
      * @param [string] $id
      * @return void
      */
-    function offreFormationDispo($id){
+    function offreFormationDispo(){
         $dbh = connexion();
         $requete = "select * from formation";
         
         $prepReq = $dbh->prepare($requete);
-        $prepReq->BindValue(':id',$id);
 
         $execPrepReq = $prepReq->execute();
         
@@ -82,7 +82,8 @@
 
     function formationsEnAttente($id){
         $dbh = connexion();
-        $requete = "select * from salarie natural join participer natural join formation where statut='2' and salarie.id_Salarie = :id";
+        $requete = "select * from salarie natural join participer natural join 
+        formation where statut='2' and salarie.id_Salarie = :id";
         $prepReq = $dbh->prepare($requete);
         $prepReq->BindValue(':id',$id);
 
@@ -93,9 +94,10 @@
         return $data;
     }
 
-    function formationsFinie($id){
+    function formationsFinie($id,$dateFinale){
         $dbh = connexion();
-        $requete = "select * from salarie natural join participer natural join formation where statut='5' and salarie.id_Salarie = :id";
+        $requete = "select * from formation natural join participer where statut='5'
+        and salarie.id_Salarie = :id";
         $prepReq = $dbh->prepare($requete);
         $prepReq->BindValue(':id',$id);
 
@@ -122,6 +124,18 @@
         $data = $prepReq->fetchAll();
         
         return $data;
+    }
+
+    function verificationStatut($idFormation, $salarie){
+        $connection = connexion();
+        $requete = "select statut from participer natural join formation where formation.id_Formation = :id 
+        and id_Salarie = :salarie and participer.id_Formation = :id";
+        $prepReq = $connection->prepare($requete);
+        $prepReq->BindValue(':id',$idFormation);
+        $prepReq->BindValue(':salarie',$salarie);
+        $execPrepReq = $prepReq->execute();
+        $tab = $prepReq->fetch();
+        if($tab[0] == "") return true; else return false;
     }
 
     /**
@@ -170,16 +184,16 @@
         $prepRequete->bindValue(':id',$_COOKIE["id"]);
         $prepRequete->bindValue(':formation',$formation);
         $execRequete = $prepRequete->execute();
-        $url = "../offres.php";
+        $url = "../index.php";
         rediriger($url);
     }
 
-    function ancienneFormation($id, $nom) {
+    function ancienneFormation($formation) {
         $connexion = connexion();
-        $requete = "update participer set statut ='5' where participer.id_Salarie=:nom and participer.id_Formation=:id";
+        $requete = "update participer set statut ='5' where participer.id_Salarie=:idSalarie and participer.id_Formation=:formation";
         $prepRequete = $connexion->prepare($requete);
-        $prepRequete->bindValue(':id',$id);
-        $prepRequete->bindValue(':nom',$nom);
+        $prepRequete->bindValue(':idSalarie',$_COOKIE["id"]);
+        $prepRequete->bindValue(':formation',$nom);
         $execRequete = $prepRequete->execute();
         $url = "./offres.php";
         rediriger($url);

@@ -41,10 +41,5 @@
         include_once("vues/landing_equipe.php");
     ?>
     </div>
-    <?php    
-        include_once("vues/footer.php"); 
-    ?>
-
-
 </body>
 </html>

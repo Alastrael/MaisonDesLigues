@@ -31,9 +31,6 @@
             include_once("vues/landing_offres.php");
         ?>
     </div>
-    <?php    
-        include_once("vues/footer.php"); 
-    ?>
 
 </body>
 </html>

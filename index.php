@@ -33,10 +33,6 @@
             include_once("vues/landing.php");
         ?>
     </div>
-    <?php    
-        include_once("vues/footer.php"); 
-    ?>
-       
 </body>
 
 </html>

@@ -1,9 +1,9 @@
 <?php    
 //pense bete : creer un bouton qui permettrait de pouvoir valider la formation, il se mettrait disabled tant que la date + durée de la formation est inférieure à la current date
     function pageFormations($valeur,$page,$dateFinale){
-        $dateFinale = date_create($valeur['datedebut_Formation']);
+        //$dateFinale = date_create($valeur['datedebut_Formation']);
         //$dateFinale = strtotime(date("Y-m-d", strtotime($dateFinale)) . " +".$valeur['NbrJour_formation']." day");
-        date_add($dateFinale,date_interval_create_from_date_string($valeur['nbrJour_Formation']));
+        //date_add($dateFinale,date_interval_create_from_date_string($valeur['nbrJour_Formation']));
         ?>
         <i class='fa fa-arrow-circle-down fa-spin' aria-hidden='true'></i>
             </a> 
@@ -18,8 +18,8 @@
                                 else {
                                     if($page == "offres") echo "Disponible";
                                     else if ($valeur['statut']=='2') echo "En attente de validation";
-                                    else if($valeur['datedebut_Formation']<date("Y-m-d") && $dateFinale>date("Y-m-d"))echo "En cours";
-                                    else if($dateFinale<date("Y-m-d"))echo "A classer";
+                                    else if($valeur['datedebut_Formation']<date("Y-m-d") && date("Y-m-d",$dateFinale)>date("Y-m-d"))echo "En cours";
+                                    else if(date("Y-m-d",$dateFinale)<date("Y-m-d"))echo "A classer";
                                     else echo "Acceptée";
                                     
                                 }
@@ -99,7 +99,7 @@
                              onclick='alert('Annulation de la ".$valeur['nom_Formation'].
                             "')' type='submit' name='submit' value='Annuler la participation'>
                         </div>";
-                        else echo "
+                        else if(date("Y-m-d",$dateFinale)<date("Y-m-d")) echo "
                         <div>
                             <input class='btn btn-primary' style='background-color: rgba(44, 156, 164, 0.8); color:white;position:relative; left:650px;' name='submit' type='submit' value='Classer cette formation'>
                         </div>";
@@ -117,32 +117,37 @@
         $data = offreFormationDispo($_COOKIE["moncookie"]);
         $page = "offres";
         foreach ($data as $valeur) {
-            $dateFinale = $valeur['datedebut_Formation'];
-            $dateFinale = strtotime(date("Y-m-d", strtotime($dateFinale)) . " +".$valeur['nbrJour_Formation']." day");
-            
-            if($valeur['datedebut_Formation']>=date("Y-m-d")) {
-                echo 
-                "
-                <a class='list-group-item list-group-item-action text-center' data-toggle='collapse' href='#"
-                .$valeur['id_Formation']."' style='margin-top:1%;' aria-expanded='false' aria-controls='collapseExample'>
-                ";
-                echo $valeur['nom_Formation'];
-                pageFormations($valeur,$page,$dateFinale);
-          
-                ?>
-                    <form style="position:relative; left:70px; bottom:54px;" action="vues/update.php" method="POST" id="form<?php echo $valeur['id_Formation'];?>">
-                        <div>
-                            <input type="hidden" name="idFormation" value="<?php echo $valeur['id_Formation'];?>">
+            if (verificationStatut($valeur['id_Formation'],$_COOKIE['id'])) {
+                $dateFinale = $valeur['datedebut_Formation'];
+                $dateFinale = strtotime(date("Y-m-d", strtotime($dateFinale)) . " +"
+                .$valeur['nbrJour_Formation']." day");
+                
+                if($valeur['datedebut_Formation']>=date("Y-m-d")) {
+                    echo 
+                    "
+                    <a class='list-group-item list-group-item-action text-center' data-toggle='collapse' href='#"
+                    .$valeur['id_Formation']."' style='margin-top:1%;' aria-expanded='false'
+                    aria-controls='collapseExample'>
+                    ";
+                    echo $valeur['nom_Formation'];
+                    pageFormations($valeur,$page,$dateFinale);
+              
+                    ?>
+                        <form style="position:relative; left:70px; bottom:54px;" action="vues/update.php" method="POST" id="form<?php echo $valeur['id_Formation'];?>">
+                            <div>
+                                <input type="hidden" name="idFormation" value="<?php echo $valeur['id_Formation'];?>">
+                            </div>
+                            <div>
+                                <input class="btn" style="background-color: rgba(44, 156, 164, 0.8); color:white; position:relative; left:575px;" type="submit" value="S'inscrire à cette formation">
+                            </div> 
+                        </form>                                    
                         </div>
-                        <div>
-                            <input class="btn" style="background-color: rgba(44, 156, 164, 0.8); color:white; position:relative; left:575px;" type="submit" value="S'inscrire à cette formation">
-                        </div> 
-                    </form>                                    
                     </div>
                 </div>
-            </div>
-            <?php
-            }            
+                <?php
+                }
+            }
+                        
         }//ferme le foreach
         if(count($data)==0 || $data == null){
             echo "<h1 class='text-center'>Aucune offre disponible.</h1>";
@@ -150,30 +155,32 @@
     }//ferme la fonction OffresFormations
     
     function historiqueDesFormations(){
-        $data = formationsFinie($_COOKIE["moncookie"]);
         $page = "historique";
+        $data = offreFormationDispo();
         foreach ($data as $valeur) 
         {
             $dateFinale = $valeur['datedebut_Formation'];
-            $dateFinale = strtotime(date("Y-m-d", strtotime($dateFinale)) . " +".$valeur['NbrJour_Formation']." day");
-            echo 
-            "
-            <a class='list-group-item list-group-item-action text-center' data-toggle='collapse' href='#"
-            .$valeur['id_Formation']."' style='margin-top:1%;' aria-expanded='false' aria-controls='collapseExample'>
-            ";
-            
-            echo $valeur['nom_Formation'];
-            pageFormations($valeur,$page,$dateFinale);
-            echo "
+            $dateFinale = strtotime(date("Y-m-d", strtotime($dateFinale)) . " +".$valeur['nbrJour_Formation']." day");
+            if(date("Y-m-d",$dateFinale)<date("Y-m-d")) {
+                echo 
+                "
+                <a class='list-group-item list-group-item-action text-center' data-toggle='collapse' href='#"
+                .$valeur['id_Formation']."' style='margin-top:1%;' aria-expanded='false' aria-controls='collapseExample'>
+                ";
+                
+                echo $valeur['nom_Formation'];
+                pageFormations($valeur,$page,$dateFinale);
+                echo "
+                        </div>
                     </div>
-                </div>
-            </div>            
-            ";
+                </div>            
+                ";
+            }
         }//ferme le foreach      
     }//ferme la fonction historiqueDesFormations
 
     function equipeAffichage(){
-        $data = equipier($_COOKIE["moncookie"]);
+        $data = equipier($_COOKIE["id"]);
         $page = "equipe";
         foreach ($data as $valeur) {
             $formations = formationsEnAttente($valeur['id_Salarie']);

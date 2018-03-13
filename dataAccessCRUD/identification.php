@@ -65,14 +65,14 @@
 
 
 
-    function chef($nom)
+    function chef()
     {
         $connexion = connexion();
 
-        $requete = "select nom_Salarie from equipe where nom_Salarie = :nom";
+        $requete = "select id_Salarie from equipe where id_Salarie = :id";
 
         $resultat = $connexion->prepare($requete);
-        $resultat->BindValue(':nom',$nom);
+        $resultat->BindValue(':id',$_COOKIE["id"]);
 
         $execResultat = $resultat->execute();
 
