@@ -9,6 +9,15 @@
             </a> 
             <div class='collapse' id='<?php echo $valeur['id_Formation']?>'>
                 <div class='card card-body'>
+                <div style='height: 50px;'>
+                    <form method="POST" action="pdf.php">
+                        <button type="submit" value=
+                        <?php echo $valeur['id_Formation'] ?> 
+                        style="background-color: rgba(223, 67, 56, 0.9);"
+                         name='bouttonPDF' class="btn btn-primary btn-danger"><i class="fa fa-print"></i>
+                          PDF</button>
+                    </form>
+                </div>
                     <table class="table" name="tableauPDF">
                         <tbody>
                         <tr>
@@ -52,14 +61,6 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div style='height: 50px;'>
-                    <form method="POST" action="pdf.php">
-                        <button type="submit" value=
-                        <?php echo $valeur['id_Formation'] ?> 
-                        style="background-color: rgba(223, 67, 56, 0.9);"
-                         name='bouttonPDF' class="btn btn-primary btn-danger"><i class="fa fa-print"></i>
-                          PDF</button>
-                    </form>
                     
             
         <?php
@@ -87,7 +88,7 @@
 
                 pageFormations($valeur,$page,$dateFinale);
                 echo "
-                            <form style='position:relative; left:70px; bottom:54px; width:90%;' action='vues/annulerParticipation.php' method='POST' id='".$valeur['id_Salarie']."'>
+                            <form style='width:90%;' action='vues/annulerParticipation.php' method='POST' id='".$valeur['id_Salarie']."'>
                                 <div>
                                     <input type='hidden' value='".$valeur['id_Formation']."' name='identifiantParticipation'>
                                 </div>";
@@ -95,13 +96,13 @@
                     <?php
                         if($valeur['datedebut_Formation']>=date("Y-m-d")) echo "
                         <div>
-                            <input class='btn btn-primary' style='background-color: rgba(44, 156, 164, 0.8); color:white; position:relative; left:595px;'
+                            <input class='btn btn-primary' style='background-color: rgba(44, 156, 164, 0.8); color:white;'
                              onclick='alert('Annulation de la ".$valeur['nom_Formation'].
                             "')' type='submit' name='submit' value='Annuler la participation'>
                         </div>";
                         else if(date("Y-m-d",$dateFinale)<date("Y-m-d")) echo "
                         <div>
-                            <input class='btn btn-primary' style='background-color: rgba(44, 156, 164, 0.8); color:white;position:relative; left:650px;' name='submit' type='submit' value='Classer cette formation'>
+                            <input class='btn btn-primary' style='background-color: rgba(44, 156, 164, 0.8); color:white;' name='submit' type='submit' value='Classer cette formation'>
                         </div>";
                     ?>
                                 

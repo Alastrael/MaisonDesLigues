@@ -23,11 +23,10 @@
 <body>
 
     <?php
-        $_COOKIE["nomPage"] = "index";
+        $_COOKIE["nomPage"] = "Vos Formations";
         include_once("dataAccessCRUD/redirectionCookies.php");
         include_once("vues/header.php");
         include_once("vues/_landingCHEF.php");
-        include_once("vues/footer.php"); 
     ?>
        
 </body>

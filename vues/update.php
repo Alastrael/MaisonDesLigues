@@ -18,7 +18,7 @@
     <?php
         $connexion = connexion();
         if(chef()) $requete = "INSERT INTO participer (id_Salarie, id_Formation, statut) VALUES (:salarie, :formation,1)";
-        else $requete = "INSERT INTO participer (id_Salarie, id_Formation, statut) VALUES (:salarie, :formation,2)";
+        else $requete = "INSERT INTO participer (id_Salarie, id_Formation, statut) VALUES (:salarie, :formation,)";
         $prepRequete = $connexion->prepare($requete);
         $prepRequete->bindValue(':formation',$_POST["idFormation"]);
         $prepRequete->bindValue(':salarie',$_COOKIE["id"]);

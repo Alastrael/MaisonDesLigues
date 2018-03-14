@@ -2,9 +2,9 @@
         include_once("barreNavigation.php");
     ?>
         <!-- Début du tableau des formations !-->
-        <div id="landing" class="row justifiy-content-center" style="width:100%;">
-            <div id="formations" class="justifiy-content-center" style="margin-left: 25%;">
-                <div class="list-group justifiy-content-center" style="width: 100%;">
+        <div id="landing" class="col-md-auto " style="width:100%;">
+            <div id="formations" class="col-md-auto d-flex justify-content-center">
+                <div class="list-group justifiy-content-between centered" style="width: 70%;">
                     <?php      
                         nomDeFormation();
                     ?>
