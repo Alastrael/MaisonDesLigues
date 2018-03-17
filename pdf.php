@@ -16,15 +16,15 @@ foreach ($data as $formation) {
     
     <tr>
         <th scope='row'>Description de la formation</th>
-        <td>".$formation['contenu_formation']."</td>
+        <td>".$formation['contenu_Formation']."</td>
     </tr>
     <tr>
         <th scope='row'>Début de la formation</th>
-        <td>".$formation['Date_formation']."</td>
+        <td>".$formation['datedebut_Formation']."</td>
     </tr>
     <tr>
         <th scope='row'>Nombre d'heures</th>
-        <td>".$formation['Duree_formation']."</td>
+        <td>".$formation['nbrheures_formation']."</td>
     </tr>
     <tr>
         <th scope='row'>Nombre de jours de formation</th>
@@ -32,17 +32,17 @@ foreach ($data as $formation) {
     </tr>
     <tr>
         <th scope='row'>Lieu de formation</th>
-        <td>".$formation['lieu_formation']."</td>
+        <td>".$formation['lieu_Formation']."</td>
     </tr>
     <tr>
         <th scope='row'>Prérequis pour la formation</th>
-        <td>".$formation['prerequis_formation']."</td>
+        <td>".$formation['prerequis_Formation']."</td>
     </tr>
     </tbody>
 </table>
 <hr>";
 
-$nomFormation = $formation['nom_formation'];
+$nomFormation = $formation['nom_Formation'];
 
 }
 
