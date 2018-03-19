@@ -1,23 +1,21 @@
-<?php    
-//pense bete : creer un bouton qui permettrait de pouvoir valider la formation, il se mettrait disabled tant que la date + durée de la formation est inférieure à la current date
+<?php
+    /**
+     * This function display formations with a collapse. It avoids repetitions in the code and return true.
+     */
     function pageFormations($valeur,$page,$dateFinale){
-        //$dateFinale = date_create($valeur['datedebut_Formation']);
-        //$dateFinale = strtotime(date("Y-m-d", strtotime($dateFinale)) . " +".$valeur['NbrJour_formation']." day");
-        //date_add($dateFinale,date_interval_create_from_date_string($valeur['nbrJour_Formation']));
         ?>
-        <i class='fa fa-arrow-circle-down fa-spin' aria-hidden='true'></i>
+        <i class='fa fa-arrow-circle-down' aria-hidden='true'></i>
             </a> 
             <div class='collapse' id='<?php echo $valeur['id_Formation']?>'>
                 <div class='card card-body'>
-                <div style='height: 50px;'>
-                    <form method="POST" action="pdf.php">
-                        <button type="submit" value=
-                        <?php echo $valeur['id_Formation'] ?> 
-                        style="background-color: rgba(223, 67, 56, 0.9);"
-                         name='bouttonPDF' class="btn btn-primary btn-danger"><i class="fa fa-print"></i>
-                          PDF</button>
-                    </form>
-                </div>
+                    <div class='pdfButton'>
+                        <form method="POST" action="pdf.php">
+                            <button type="submit" value=
+                            <?php echo $valeur['id_Formation'] ?>
+                            name='bouttonPDF' class="btn btn-primary btn-danger redButton"><i class="fa fa-print"></i>
+                            PDF</button>
+                        </form>
+                    </div>
                     <table class="table" name="tableauPDF">
                         <tbody>
                         <tr>
@@ -27,10 +25,10 @@
                                 else {
                                     if($page == "offres") echo "Disponible";
                                     else if ($valeur['statut']=='2') echo "En attente de validation";
-                                    else if($valeur['datedebut_Formation']<date("Y-m-d") && date("Y-m-d",$dateFinale)>date("Y-m-d"))echo "En cours";
+                                    else if($valeur['datedebut_Formation']<date("Y-m-d") && date("Y-m-d",
+                                        $dateFinale)>date("Y-m-d"))echo "En cours";
                                     else if(date("Y-m-d",$dateFinale)<date("Y-m-d"))echo "A classer";
                                     else echo "Acceptée";
-                                    
                                 }
                                 ?>
                             </td>
@@ -61,62 +59,65 @@
                         </tr>
                         </tbody>
                     </table>
-                    
-            
         <?php
-    }//ferme la fonction pageFormations
+        return true;
+    }//close the function pageFormations.
 
-    function nomDeFormation(){
+    /**
+     * This function display formations which has a link with the current-user (a link symbolize by 1 or 2).
+     */
+    function affichageFormations(){
         include_once("dataAccessCRUD/idFormation.php");
-
         $data= nomFormation($_COOKIE["moncookie"]);
         $page = "formations";
-
         foreach ($data as $valeur) 
         {
             $dateFinale = $valeur['datedebut_Formation'];
             $dateFinale = strtotime(date("Y-m-d", strtotime($dateFinale)) . " +".$valeur['nbrJour_Formation']." day");
-            
                 echo "
-                <a class='list-group-item list-group-item-action text-center' data-toggle='collapse' href='#"
+                <a class='list-group-item list-group-item-action text-center aCollapse' data-toggle='collapse' href='#"
                 .$valeur['id_Formation']."' style='background-color: "
-                .(($valeur['statut']=='2') ? 'rgba(152, 153, 154, 0.3)':'').";margin-top:1%;' aria-expanded='false' aria-controls='collapseExample'>
+                .(($valeur['statut']=='2') ? 'rgba(152, 153, 154, 0.3)':'').";' aria-expanded='false' aria-controls='collapseExample'>
                 ";
-            
                 echo $valeur['nom_Formation'];
                 if($valeur['statut']=='2') echo "=> en attente de validation";
-
                 pageFormations($valeur,$page,$dateFinale);
                 echo "
-                            <form style='width:90%;' action='vues/annulerParticipation.php' method='POST' id='".$valeur['id_Salarie']."'>
-                                <div>
-                                    <input type='hidden' value='".$valeur['id_Formation']."' name='identifiantParticipation'>
-                                </div>";
+                    <form class='aCollapse' action='vues/annulerParticipation.php' method='POST' id='".$valeur['id_Salarie']."'>
+                        <div>
+                            <input type='hidden' value='".$valeur['id_Formation']."' name='identifiantParticipation'>
+                        </div>
+                    ";
                     ?>
                     <?php
                         if($valeur['datedebut_Formation']>=date("Y-m-d")) echo "
                         <div>
-                            <input class='btn btn-primary' style='background-color: rgba(44, 156, 164, 0.8); color:white;'
+                            <input class='btn btn-primary formButtonCollapse'
                              onclick='alert('Annulation de la ".$valeur['nom_Formation'].
                             "')' type='submit' name='submit' value='Annuler la participation'>
                         </div>";
                         else if(date("Y-m-d",$dateFinale)<date("Y-m-d")) echo "
                         <div>
-                            <input class='btn btn-primary' style='background-color: rgba(44, 156, 164, 0.8); color:white;' name='submit' type='submit' value='Classer cette formation'>
+                            <input class='btn btn-primary formButtonCollapse'
+                            name='submit' type='submit' value='Classer cette formation'>
                         </div>";
                     ?>
                                 
                             </form>
                         </div>
-                    </div>
-                </div>   
+                    </div>  
             <?php
-        }//ferme le foreach
-    }//ferme la fonction nomDeFormations
+        }//end foreach.
+    }//end of the function affichageFormations.
 
-    function OffresFormations(){
-        $data = offreFormationDispo($_COOKIE["moncookie"]);
+    /**
+     * This function display all the formations in the database, except those which has a statut link to
+     * the current-user or the current-date > limit date.
+     */
+    function offresFormations(){
+        $data = formationsAll();
         $page = "offres";
+        $passage = false;
         foreach ($data as $valeur) {
             if (verificationStatut($valeur['id_Formation'],$_COOKIE['id'])) {
                 $dateFinale = $valeur['datedebut_Formation'];
@@ -131,55 +132,60 @@
                     aria-controls='collapseExample'>
                     ";
                     echo $valeur['nom_Formation'];
-                    pageFormations($valeur,$page,$dateFinale);
-              
+                    $passage = pageFormations($valeur,$page,$dateFinale);              
                     ?>
-                        <form style="position:relative; left:70px; bottom:54px;" action="vues/update.php" method="POST" id="form<?php echo $valeur['id_Formation'];?>">
+                    
+                        <form action="vues/update.php" method="POST" id="form<?php echo $valeur['id_Formation'];?>">
                             <div>
                                 <input type="hidden" name="idFormation" value="<?php echo $valeur['id_Formation'];?>">
                             </div>
                             <div>
-                                <input class="btn" style="background-color: rgba(44, 156, 164, 0.8); color:white; position:relative; left:575px;" type="submit" value="S'inscrire à cette formation">
+                                <input class="btn btn-primary formButtonCollapse" type="submit" value="S'inscrire à cette formation">
                             </div> 
-                        </form>                                    
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <?php
                 }
             }
-                        
         }//ferme le foreach
-        if(count($data)==0 || $data == null){
+        if(!$passage){
             echo "<h1 class='text-center'>Aucune offre disponible.</h1>";
         }
-    }//ferme la fonction OffresFormations
+    }//close the function OffresFormations.
     
+    /**
+     * This function display formations that has the limit-date < current-date.
+     */
     function historiqueDesFormations(){
         $page = "historique";
-        $data = offreFormationDispo();
-        foreach ($data as $valeur) 
+        $data = formationsAll();
+        foreach ($data as $value) 
         {
-            $dateFinale = $valeur['datedebut_Formation'];
-            $dateFinale = strtotime(date("Y-m-d", strtotime($dateFinale)) . " +".$valeur['nbrJour_Formation']." day");
-            if(date("Y-m-d",$dateFinale)<date("Y-m-d")) {
-                echo 
-                "
-                <a class='list-group-item list-group-item-action text-center' data-toggle='collapse' href='#"
-                .$valeur['id_Formation']."' style='margin-top:1%;' aria-expanded='false' aria-controls='collapseExample'>
-                ";
-                
-                echo $valeur['nom_Formation'];
-                pageFormations($valeur,$page,$dateFinale);
-                echo "
-                        </div>
-                    </div>
-                </div>            
-                ";
-            }
-        }//ferme le foreach      
-    }//ferme la fonction historiqueDesFormations
+            $dateFinale = $value['datedebut_Formation'];
+            $dateFinale = strtotime(date("Y-m-d", strtotime($dateFinale)) . " +".$value['nbrJour_Formation']." day");
+            $formationsFinies = formationsFinie($_COOKIE["id"],date("Y-m-d",$dateFinale));
+        }//ferme le foreach
+        foreach ($formationsFinies as $valeur) {
+            echo 
+            "
+            <a class='list-group-item list-group-item-action text-center' data-toggle='collapse' href='#"
+            .$valeur['id_Formation']."' style='margin-top:1%;' aria-expanded='false' aria-controls='collapseExample'>
+            ";
+            
+            echo $valeur['nom_Formation'];
+            pageFormations($valeur,$page,$dateFinale);
+            echo "
+                </div>
+            </div>            
+            ";
+        }
+    }//close the function historiqueDesFormations
 
+    /**
+     * This function allows chief to manage there teams. They can accept or refuse
+     * the demand of formations.
+     */
     function equipeAffichage(){
         $data = equipier($_COOKIE["id"]);
         $page = "equipe";
@@ -198,16 +204,17 @@
                 <div class='card card-body espace'> 
                     <div class='espace'>
                         <p>
-                            <?php echo $valeur['nom_Salarie'] ?> a demandé de suivre les formations suivantes : <br>
+                            <?php echo $valeur['nom_Salarie'] ?> suit les formations suivantes : <br>
                             <?php 
                                 $message = "";
-                                foreach ($formations as $valeur) {
-                                    if(count($formations)>=1){
-                                        echo "- ".$valeur['nom_Formation']."<br>";
-                                        $message = "fait";
-                                    } 
+                                $formationsEnAttente = formationsSuivies($valeur['id_Salarie']);
+                                foreach ($formationsEnAttente as $valeur) {
+                                    echo "- ".$valeur['nom_Formation']."<br>";
                                 }
-                                if($message == "") echo "Aucune.";
+                                if(count($formationsEnAttente)==0) {
+                                    echo "Aucune.";
+                                }
+                                if(count($formations)>=1)$message = "fait";
                             ?>
                         </p>
                     </div>
@@ -215,13 +222,15 @@
                     <form action='vues/_updateCHEF.php' method='POST' id='".$valeur['id_Salarie']."'>
                         <div class='form-group'>
                             <label for='exampleFormControlSelect1'>Selectionnez la formation que vous voulez gérer : </label>
-                            <div style='display:inline;'>
+                            <div>
                                 <select class='form-control' name='identifiantFormation' style='width:30%;'>";
                                     foreach ($formations as $formation) {
                                         echo "<option style='margin-right:-10%;' value='".$formation['id_Formation']."'>".$formation['nom_Formation']."</option>";
                                     }
                                     echo "     
-                                </select>                          
+                                </select>
+                                </div>
+                                <div>
                                 <select class='form-control' name='decision' style='width:30%;'>
                                     <option value='accepter'>Accepter la demande</option>;  
                                     <option value='refuser'>Refuser la demande</option>; 
@@ -236,6 +245,6 @@
             </div>
         <?php
         }
-    }//ferme la fonction equipeAffichage
+    }//close the function equipeAffichage.
 
 ?>

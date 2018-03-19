@@ -1,0 +1,26 @@
+/*CSS document for all pages*/
+
+body {
+    background-color: rgb(172, 172, 172) !important;
+}
+
+.redButton {
+    background-color: rgba(223, 67, 56, 0.9) !important;
+}
+
+#container {
+    font-family: 20px Montserrat, sans-serif;
+    font-size: 19px;
+}
+
+.aCollapse {
+    margin-top:1%;
+}
+.formCollapse {
+    width:90%;
+}
+.formButtonCollapse {
+    background-color: rgba(64, 153, 180, 0.856) !important;
+    color:white;
+    border-color: rgba(64, 153, 180, 0.856);
+}

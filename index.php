@@ -3,15 +3,15 @@
     require_once("vues/afficher.php");
     require_once("dataAccessCRUD/identification.php");
 ?>
-
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="assets/css/accueil.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/pageFormations.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/forAll.css">
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/deconnexion.js"></script>
     <script src="https://use.fontawesome.com/b8a3d61bd6.js"></script>
@@ -20,9 +20,7 @@
     <script src="assets/js/bootstrap.min.js" ></script>
     <title>Accueil - M2L</title>
 </head>
-
 <body>
-
     <?php
         $_COOKIE["nomPage"] = "index";
         include_once("dataAccessCRUD/redirectionCookies.php");
@@ -34,5 +32,4 @@
         ?>
     </div>
 </body>
-
 </html>

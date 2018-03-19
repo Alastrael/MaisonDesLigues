@@ -6,13 +6,9 @@
             <div id="formations" class="col-md-auto d-flex justify-content-center">
                 <div class="list-group justifiy-content-between centered" style="width: 70%;">
                     <?php      
-                        nomDeFormation();
+                        affichageFormations();
                     ?>
                 </div>
             </div>
         </div>
- <!-- fin container
-    
-    
-    
- !-->
+ <!-- fin container!-->

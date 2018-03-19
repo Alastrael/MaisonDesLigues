@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="assets/css/authent.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/forAll.css">
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/b8a3d61bd6.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -13,16 +14,16 @@
     <script src="assets/js/bootstrap.min.js" ></script>
     <script src="assets/js/erreurDeConnexion.js"></script>
     <?php
-        //Destruction du cookie "moncooki" qui recueille l'identifiant de la personne identifiée.
+        //Destruction of the cookie "moncooki" which has the id of the identified person.
         setcookie("moncookie","",time()-3600);
-        //Chemin du fichier php qui permet d'accèder à la base de donnée et de pouvoir utiliser l'identification.
+        //Path of the php file that has access to the database.
         include_once("dataAccessCRUD/identification.php");
     ?>
     <title>Portail d'accès</title>
 </head>
 <body>
     <?php
-        //affichage du header de la page de connexion
+        //Header of the connexion page.
         include_once("vues/connexion_header.php");
     ?>
     <div class="container" style="margin-top:5%">

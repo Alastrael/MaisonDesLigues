@@ -11,6 +11,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="assets/css/accueil.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/pageFormations.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/forAll.css">
     <script src="https://use.fontawesome.com/b8a3d61bd6.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/deconnexion.js"></script>

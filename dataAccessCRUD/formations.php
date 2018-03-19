@@ -1,110 +1,99 @@
 <?php
 
     /**
-     * Cette fonction a pour but de se connecter à notre base de donnée bdd_m2l
+     * This function is the way to connect to the m2l's database.
      *
      * @return PDO
      */
         function connexion(){
-
         $host = "localhost";
         $dbname = "bdd-m2l";
         $user = "root";
         $mdp = "";
-
-        $pdo=new PDO('mysql:host='.$host.';dbname='.$dbname,$user,$mdp, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'))
-            or die ("Problème de connexion à la base de donnée");
-
-        //retourne une connection à la base de donnée
+        $pdo=new PDO('mysql:host='.$host.';dbname='.$dbname,$user,$mdp, 
+        array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'))or die 
+        ("Problème de connexion à la base de donnée");
         return $pdo;
     }
     //fin fonction connexion
 
-    /**
-     * Cette fonction a pour but de renvoyer toutes les informations des formations ordonnées par les id
-     *
-     * @param [string] $id
-     * @return void
-     */
-
     function pdfFormations($id){
         $pdo = connexion();
-        
         $requete = "select * from formation where id_Formation = :id";
-        
         $prepReq = $pdo->prepare($requete);
         $prepReq->BindValue(':id',$id);
-        
         $execPrepReq = $prepReq->execute();
-        
         $data = $prepReq->fetchAll();
-        
         return $data;
     }
     
-    function nomFormation($nom){
-
+    function formationsSuivies($id){
         $pdo = connexion();
+        $requete = "select * from formation natural join salarie natural join 
+        participer where statut=1 and salarie.id_Salarie = :id";
+        $prepReq = $pdo->prepare($requete);
+        $prepReq->BindValue(':id',$id);
+        $execPrepReq = $prepReq->execute();
+        $data = $prepReq->fetchAll();
+        return $data;
+    }
 
+    function nomFormation($nom){
+        $pdo = connexion();
         $requete = "select * from salarie natural join participer natural join 
         formation where (statut=1 or statut=2) and salarie.nom_Salarie = :nom";
-
         $prepReq = $pdo->prepare($requete);
         $prepReq->BindValue(':nom',$nom);
-
         $execPrepReq = $prepReq->execute();
-
         $data = $prepReq->fetchAll();
-
         return $data;
     }
     //fin de la fonction nomFormation
 
     /**
-     * Cette fonction a pour but de rechercher une formation avec son id
+     * This function is used to return all the informations of the table formation.
      *
-     * @param [string] $id
+     * @param
      * @return void
      */
-    function offreFormationDispo(){
+    function formationsAll(){
         $dbh = connexion();
-        $requete = "select * from formation";
-        
+        $requete = "select id_Formation, nom_Formation, contenu_Formation, datedebut_Formation,
+        nbrJour_Formation, nbrheures_Formation, lieu_Formation, prerequis_Formation from formation";
         $prepReq = $dbh->prepare($requete);
-
         $execPrepReq = $prepReq->execute();
-        
         $data = $prepReq->fetchAll();
-        
         return $data;
-    }
-    //fin de la fonction des offres de formations disponible
+    }//end of formations.
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @return void
+     */
     function formationsEnAttente($id){
         $dbh = connexion();
         $requete = "select * from salarie natural join participer natural join 
         formation where statut='2' and salarie.id_Salarie = :id";
         $prepReq = $dbh->prepare($requete);
         $prepReq->BindValue(':id',$id);
-
         $execPrepReq = $prepReq->execute();
-        
         $data = $prepReq->fetchAll();
-        
         return $data;
     }
 
     function formationsFinie($id,$dateFinale){
         $dbh = connexion();
-        $requete = "select * from formation natural join participer where statut='5'
-        and salarie.id_Salarie = :id";
+        $requete = "SELECT * FROM formation natural join salarie natural join participer
+        WHERE :dateFinale < CURDATE()
+        AND salarie.id_Salarie = :id
+        AND participer.statut = '3'";
         $prepReq = $dbh->prepare($requete);
         $prepReq->BindValue(':id',$id);
-
+        $prepReq->BindValue(':dateFinale',$dateFinale);
         $execPrepReq = $prepReq->execute();
-        
         $data = $prepReq->fetchAll();
-        
         return $data;
     }
 
@@ -188,14 +177,14 @@
         rediriger($url);
     }
 
-    function ancienneFormation($formation) {
+    function classerFormation($formationID) {
         $connexion = connexion();
-        $requete = "update participer set statut ='5' where participer.id_Salarie=:idSalarie and participer.id_Formation=:formation";
+        $requete = "update participer set statut ='3' where participer.id_Salarie=:idSalarie and participer.id_Formation=:formation";
         $prepRequete = $connexion->prepare($requete);
         $prepRequete->bindValue(':idSalarie',$_COOKIE["id"]);
-        $prepRequete->bindValue(':formation',$nom);
+        $prepRequete->bindValue(':formation',$formationID);
         $execRequete = $prepRequete->execute();
-        $url = "./offres.php";
+        $url = "../offres.php";
         rediriger($url);
     }
 

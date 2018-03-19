@@ -13,7 +13,8 @@
 <body>
 
     <?php
-        annulerParticipation($_POST['identifiantParticipation']);
+    if($_POST["submit"]=="Annuler la participation") annulerParticipation($_POST['identifiantParticipation']);
+    if($_POST["submit"]=="Classer cette formation") classerFormation($_POST["identifiantParticipation"]);
     ?>
 
 </body>

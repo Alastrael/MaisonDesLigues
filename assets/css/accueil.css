@@ -1,4 +1,4 @@
-/*document css de l'index de l'accueil avec l'affichage des différentes formations */
+/*CSS document to display the formations of the current-user*/ 
 
 /*Le fond de la page*/
 body {
@@ -12,6 +12,10 @@ body {
 
 h1 {
     margin-top: 10%;
+}
+
+.redButton {
+    background-color: rgba(223, 67, 56, 0.9) !important;
 }
 
 .centrer{
