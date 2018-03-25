@@ -57,6 +57,10 @@
                             <th scope="row">Prérequis pour la formation</th>
                             <td><?php echo $valeur['prerequis_Formation']?></td>
                         </tr>
+                        <tr>
+                            <th scope="row">Prestataire pour la formation</th>
+                            <td><?php echo $valeur['prestataire_Formation']?></td>
+                        </tr>
                         </tbody>
                     </table>
         <?php
@@ -79,11 +83,12 @@
                 .$valeur['id_Formation']."' style='background-color: "
                 .(($valeur['statut']=='2') ? 'rgba(152, 153, 154, 0.3)':'').";' aria-expanded='false' aria-controls='collapseExample'>
                 ";
-                echo $valeur['nom_Formation'];
+                echo "Formation : ".$valeur['nom_Formation'];
                 if($valeur['statut']=='2') echo "=> en attente de validation";
                 pageFormations($valeur,$page,$dateFinale);
                 echo "
-                    <form class='aCollapse' action='vues/annulerParticipation.php' method='POST' id='".$valeur['id_Salarie']."'>
+                    <form class='aCollapse' action='vues/annulerParticipation.php' method='POST' id='coucou' onsubmit='javascript:return messageParticipationDenied(".$valeur['nom_Formation'].
+                    ")'>
                         <div>
                             <input type='hidden' value='".$valeur['id_Formation']."' name='identifiantParticipation'>
                         </div>
@@ -93,8 +98,8 @@
                         if($valeur['datedebut_Formation']>=date("Y-m-d")) echo "
                         <div>
                             <input class='btn btn-primary formButtonCollapse'
-                             onclick='alert('Annulation de la ".$valeur['nom_Formation'].
-                            "')' type='submit' name='submit' value='Annuler la participation'>
+                             onclick='messageParticipationDenied(".$valeur['nom_Formation'].
+                            ")' type='submit' name='submit' value='Annuler la participation'>
                         </div>";
                         else if(date("Y-m-d",$dateFinale)<date("Y-m-d")) echo "
                         <div>
@@ -131,7 +136,7 @@
                     .$valeur['id_Formation']."' style='margin-top:1%;' aria-expanded='false'
                     aria-controls='collapseExample'>
                     ";
-                    echo $valeur['nom_Formation'];
+                    echo "Formation : ".$valeur['nom_Formation'];
                     $passage = pageFormations($valeur,$page,$dateFinale);              
                     ?>
                     
@@ -173,7 +178,7 @@
             .$valeur['id_Formation']."' style='margin-top:1%;' aria-expanded='false' aria-controls='collapseExample'>
             ";
             
-            echo $valeur['nom_Formation'];
+            echo "Formation : ".$valeur['nom_Formation'];
             pageFormations($valeur,$page,$dateFinale);
             echo "
                 </div>

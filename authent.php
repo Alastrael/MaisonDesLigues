@@ -7,10 +7,15 @@
     <link rel="stylesheet" type="text/css" href="assets/css/authent.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/forAll.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/b8a3d61bd6.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="assets/js/bootstrap.min.js" ></script>
     <script src="assets/js/erreurDeConnexion.js"></script>
     <?php
@@ -26,11 +31,11 @@
         //Header of the connexion page.
         include_once("vues/connexion_header.php");
     ?>
-    <div class="container" style="margin-top:5%">
-        <div class="row justifiy-content-center">
-            <div class="card bg-light border-info mb-3 pad " style="border-width: thin; width: 30%;">
+    <div style="margin-top:5%">
+        <div class="col-md-auto d-flex justify-content-center">
+            <div class="card bg-light border-dark" style="border-width: thin;">
                 <div class = "card-header text-center" style="background-color: rgb(70, 71, 71) !important; color:white;">
-                    <h4>Authentification</h4>
+                    <h4>Connection</h4>
                 </div>
                 <div class="card-body text-center">
                 <!-- Formulaire ayant pour but de renseigner l'identifiant et le mot de passe d'un utilisateur. Il contient également un bouton pour envoyer les données. -->
@@ -73,7 +78,7 @@
                         redirection($url);
                         exit();
                     }
-                    else echo '<script>erreurConnexion()</script>';
+                    else echo '<script>swal("Vous avez rentré un mauvais login ou mot de passe.")</script>';
                     //Si le mot de passe ou l'identifiant rentré est mauvais.                       
                 } 
             ?>

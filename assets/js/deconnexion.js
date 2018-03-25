@@ -1,8 +1,15 @@
 function deco() {
-    window.location.replace("http://localhost/projet/authent.php");
-    alert("Vous vous êtes déconnecté.");
+    swal({
+        text: "Vous vous êtes déconnecté.",
+        type : "success"
+    }).then(function(){
+        window.location.replace("http://localhost/projet/authent.php");
+    });
 }
 
 function messageParticipationDenied($a) {
-    alert("Vous avez annulé votre participation à la formation "+$a);
+        swal({
+            text: "Vous avez arrêté de participer à la formation "+$a,
+            type : "success"
+            });
 }

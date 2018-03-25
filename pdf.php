@@ -33,6 +33,10 @@
                 <th scope='row'>Prérequis pour la formation</th>
                 <td>".$formation['prerequis_Formation']."</td>
             </tr>
+            <tr>
+                <th scope='row'>Prestataire pour la formation</th>
+                <td>".$formation['prestataire_Formation']."</td>
+            </tr>
             </tbody>
         </table>
         <hr>";

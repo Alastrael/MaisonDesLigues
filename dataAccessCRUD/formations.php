@@ -59,7 +59,7 @@
     function formationsAll(){
         $dbh = connexion();
         $requete = "select id_Formation, nom_Formation, contenu_Formation, datedebut_Formation,
-        nbrJour_Formation, nbrheures_Formation, lieu_Formation, prerequis_Formation from formation";
+        nbrJour_Formation, nbrheures_Formation, lieu_Formation, prerequis_Formation,prestataire_Formation from formation";
         $prepReq = $dbh->prepare($requete);
         $execPrepReq = $prepReq->execute();
         $data = $prepReq->fetchAll();
