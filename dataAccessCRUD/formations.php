@@ -16,7 +16,7 @@
         return $pdo;
     }
     //fin fonction connexion
-
+    
     function pdfFormations($id){
         $pdo = connexion();
         $requete = "select * from formation where id_Formation = :id";

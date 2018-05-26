@@ -40,17 +40,6 @@
                 <div class="card-body text-center">
                 <!-- Formulaire ayant pour but de renseigner l'identifiant et le mot de passe d'un utilisateur. Il contient également un bouton pour envoyer les données. -->
                 <form class="justifiy-content-center" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data" style="margin-bot:-4%;">
-                <!--
-                    <table class="justifiy-content-center">
-                        <tr>
-                            <td>Identifiant<input type="text" class="form-control" name="identifiant" placeholder="Votre identifiant..." maxlength="100"></td>
-                        </tr>
-                        <tr>
-                            <td>Mot de passe<input type="password" class="form-control" name="motdepasse" placeholder="Votre mot de passe..." maxlength="100"></td>
-                        </tr>
-
-                    </table>
-                !-->
                     <div>
                         <input type="text" class="form-control" name="identifiant" placeholder="Votre identifiant..." maxlength="100">
                     </div class="form-group">

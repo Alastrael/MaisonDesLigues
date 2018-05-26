@@ -1,6 +1,11 @@
 <?php
     /**
-     * This function display formations with a collapse. It avoids repetitions in the code and return true.
+     * Undocumented function
+     *
+     * @param [type] $valeur
+     * @param [type] $page
+     * @param [type] $dateFinale
+     * @return void
      */
     function pageFormations($valeur,$page,$dateFinale){
         ?>
@@ -110,7 +115,7 @@
                                 
                             </form>
                         </div>
-                    </div>  
+                    </div>
             <?php
         }//end foreach.
     }//end of the function affichageFormations.

@@ -8,6 +8,12 @@ body {
     background-color: rgba(223, 67, 56, 0.9) !important;
 }
 
+.compteButton {
+    background-color: rgba(219, 207, 40, 0.9) !important;
+    border-color: rgba(219, 207, 40, 0.9) !important;
+    color: black;
+}
+
 #container {
     font-family: 20px Montserrat, sans-serif;
     font-size: 19px;
